@@ -1,0 +1,178 @@
+
+import static com.sun.glass.ui.Cursor.setVisible;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
+
+
+public class AllMembers extends JInternalFrame implements KeyListener, ActionListener {
+
+    private Connection conn = null;
+    private PreparedStatement pst = null;
+    private ResultSet rs = null;
+    
+    private JPanel panel;
+    private JTable tb;
+    private JLabel allMemberLbl;
+    private JLabel memberNameLbl;
+    private JTextField memberName;
+    private JButton print;
+    private JButton clear;
+    private JButton exit;
+    
+    public AllMembers() {
+    
+    conn = DBConnection.connect();
+       
+    panel = new JPanel();
+        
+    //table object
+    tb = new JTable();
+    DefaultTableModel dtm = new DefaultTableModel(0, 0);
+    tb.setModel(dtm);
+    
+    
+    // label object
+    allMemberLbl = new JLabel("All members");
+    memberNameLbl = new JLabel("Member Name");
+    
+    //textfield object
+    memberName = new JTextField();
+    
+    //button object
+    print = new JButton("Print");
+    clear = new JButton("Clear");
+    exit = new JButton("Exit");
+    
+    //add key listener to bookName
+    memberName.addKeyListener(this);
+    
+    // add action listener to clear button
+    clear.addActionListener(this);
+    exit.addActionListener(this);
+    
+    //label layout
+    allMemberLbl.setBounds(10, 10, 170, 20);
+    memberNameLbl.setBounds(700, 20, 100, 20);
+    
+    // add font to label 
+    allMemberLbl.setFont(new Font("Consolas", Font.PLAIN, 20));
+    
+    //text field layout
+    memberName.setBounds(800, 20, 170, 30);
+    
+    // table layout
+    JScrollPane pane = new JScrollPane(tb);
+    pane.setBounds(50, 60, 1000, 300);
+    
+    // add border to textfield
+    memberName.setBorder(new LineBorder(Color.black));
+    
+    // add border to table
+    pane.setBorder(new LineBorder(Color.black));
+    
+    //button layout
+    print.setBounds(400, 400, 150, 30);
+    clear.setBounds(600, 400, 150, 30);
+    exit.setBounds(800, 400, 150, 30);
+    
+    // add border to buttons
+    print.setBorder(new LineBorder(Color.black));
+    clear.setBorder(new LineBorder(Color.black));
+    exit.setBorder(new LineBorder(Color.black));
+    
+    panel.setLayout(null);
+    panel.add(allMemberLbl);
+    panel.add(memberNameLbl);
+    panel.add(memberName);
+    panel.add(pane);
+    panel.add(print);
+    panel.add(clear);
+    panel.add(exit);
+    
+    getContentPane().add(panel);
+    setVisible(true);
+    setSize(1100, 500);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    
+    tableload();
+    
+    }  
+    
+    private void tableload() {
+        try {
+            String sql = "SELECT *  FROM  addmember where name LIKE'%"+memberName.getText()+"%'";
+            pst = (PreparedStatement)conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+ public void keyReleased(KeyEvent e) {
+        try {
+            String sql = "SELECT *  FROM  addmember where name LIKE '%"+memberName.getText()+"%'";
+            pst = (PreparedStatement)conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+  }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+   try {
+            String sql = "SELECT *  FROM  addmember where name LIKE '%"+memberName.getText()+"%'";
+            pst = (PreparedStatement)conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+ }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+          try {
+            String sql = "SELECT *  FROM  addbook";
+            pst = (PreparedStatement)conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
+            
+        }catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+            }
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == clear){
+            memberName.setText("");
+            tableload();
+        }else if(e.getSource() == exit) {
+            dispose();
+        }
+    }
+}
