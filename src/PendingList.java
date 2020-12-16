@@ -1,5 +1,4 @@
 
-import static com.sun.glass.ui.Cursor.setVisible;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -104,7 +103,6 @@ public class PendingList extends JInternalFrame implements ActionListener, KeyLi
     panel.add(memberNameLbl);
     panel.add(memberName);
     panel.add(pane);
-    panel.add(print);
     panel.add(clear);
     panel.add(exit);
     
@@ -118,7 +116,7 @@ public class PendingList extends JInternalFrame implements ActionListener, KeyLi
     
     private void tableload() {
         try {
-            String sql = "SELECT record_no, mid, bid, i_date, r_date, mark FROM booklend WHERE mark = '0'";
+            String sql = "SELECT record_no, memberid, bid, issuedate, r_date, mark FROM booklend WHERE mark = '0'";
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
@@ -137,7 +135,7 @@ public class PendingList extends JInternalFrame implements ActionListener, KeyLi
     }
  public void keyReleased(KeyEvent e) {
         try {
-            String sql = "SELECT record_no, mid, bid, i_date, r_date, mark FROM booklend WHERE mark = '0' AND mid LIKE '%"+memberName.getText()+"%'";
+            String sql = "SELECT record_no, memberid, bid, issuedate, r_date, mark FROM booklend WHERE mark = '0' AND memberid LIKE '%"+memberName.getText()+"%'";
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));            
@@ -149,7 +147,7 @@ public class PendingList extends JInternalFrame implements ActionListener, KeyLi
     @Override
     public void keyTyped(KeyEvent e) {
    try {
-            String sql = "SELECT record_no, mid, bid, i_date, r_date, mark FROM booklend WHERE mark = '0' AND mid LIKE '%"+memberName.getText()+"%'";
+            String sql = "SELECT record_no, memberid, bid, issuedate, r_date, mark FROM booklend WHERE mark = '0' AND memberid LIKE '%"+memberName.getText()+"%'";
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
@@ -162,7 +160,7 @@ public class PendingList extends JInternalFrame implements ActionListener, KeyLi
     @Override
     public void keyPressed(KeyEvent e) {
           try {
-            String sql = "SELECT record_no, mid, bid, i_date, r_date, mark FROM booklend WHERE mark = '0' AND mid LIKE '%"+memberName.getText()+"%'";
+            String sql = "SELECT record_no, memberid, bid, issuedate, r_date, mark FROM booklend WHERE mark = '0' AND memberid LIKE '%"+memberName.getText()+"%'";
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));

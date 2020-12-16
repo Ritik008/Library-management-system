@@ -1,5 +1,4 @@
-
-import static com.sun.glass.ui.Cursor.setVisible;
+    
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
@@ -252,9 +251,10 @@ public class AddMembers extends JInternalFrame implements ActionListener {
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
+            
             tableload();
             clearField();
-            
+            autoId();
         }else
         if(event.getSource() == update) {
             try {
@@ -268,7 +268,7 @@ public class AddMembers extends JInternalFrame implements ActionListener {
             String contact = this.contactNo.getText();
             String type = this.memberType.getSelectedItem().toString();
             
-            String sql = "UPDATE addmember SET name='"+name+"', nic = '"+nic+"', birthday='"+date+"', gender = '"+gender+"', address='"+address+"', email='"+email+"', contact='"+contact+"', type='"+type+"' WHERE mid = '"+mid+"'";
+            String sql = "UPDATE addmember SET name='"+name+"', nic = '"+nic+"', birthday='"+date+"', gender = '"+gender+"', address='"+address+"', email='"+email+"', contact='"+contact+"', membertype='"+type+"' WHERE mid = '"+mid+"'";
             pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Update success");
@@ -292,7 +292,7 @@ public class AddMembers extends JInternalFrame implements ActionListener {
         }
     } 
     private void clearField() {
-        id.setText("");
+//        id.setText("");
         name.setText("");
         nic.setText("");
         ((JTextField)birthday.getDateEditor().getUiComponent()).setText("");

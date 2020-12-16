@@ -152,11 +152,11 @@ public class BookReturn extends JInternalFrame implements KeyListener, ActionLis
     public void keyTyped(KeyEvent e) {
     if(e.getSource() == bookId){
     try {
-            String sql = "SELECT mid, r_date FROM bookLend WHERE bid = '"+bookId.getText()+"'and mark = '0'";            
+            String sql = "SELECT memberid, r_date FROM bookLend WHERE bid = '"+bookId.getText()+"'and mark = '0'";            
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if(rs.next()) {
-            memberId.setText(rs.getString("mid"));
+            memberId.setText(rs.getString("memberid"));
             DateTimeFormatter df = DateTimeFormatter.ofPattern("d-MMM-yyyy");
             String r_date = rs.getString("r_date");
             LocalDate today = LocalDate.now();
@@ -178,11 +178,11 @@ public class BookReturn extends JInternalFrame implements KeyListener, ActionLis
     public void keyPressed(KeyEvent e) {
     if(e.getSource() == bookId){
     try {
-            String sql = "SELECT mid, r_date FROM bookLend WHERE bid = '"+bookId.getText()+"'and mark = '0'";            
+            String sql = "SELECT memberid, r_date FROM bookLend WHERE bid = '"+bookId.getText()+"'and mark = '0'";            
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if(rs.next()) {
-            memberId.setText(rs.getString("mid"));
+            memberId.setText(rs.getString("memberid"));
             DateTimeFormatter df = DateTimeFormatter.ofPattern("d-MMM-yyyy");
             String r_date = rs.getString("r_date");
             LocalDate today = LocalDate.now();
@@ -205,11 +205,11 @@ public class BookReturn extends JInternalFrame implements KeyListener, ActionLis
     public void keyReleased(KeyEvent e) {
     if(e.getSource() == bookId){
     try {
-            String sql = "SELECT mid, r_date FROM bookLend WHERE bid = '"+bookId.getText()+"'and mark = '0'";            
+            String sql = "SELECT memberid, r_date FROM bookLend WHERE bid = '"+bookId.getText()+"'and mark = '0'";            
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if(rs.next()) {
-            memberId.setText(rs.getString("mid"));
+            memberId.setText(rs.getString("memberid"));
             DateTimeFormatter df = DateTimeFormatter.ofPattern("d-MMM-yyyy");
             String r_date = rs.getString("r_date");
             LocalDate today = LocalDate.now();
@@ -266,7 +266,7 @@ public class BookReturn extends JInternalFrame implements KeyListener, ActionLis
     
     private void update() {
         try {
-            String sql = "UPDATE addBook SET mark = '0' WHERE bid = '"+bookId.getText()+"'";
+            String sql = "UPDATE booklend SET mark = '0' WHERE bid = '"+bookId.getText()+"'";
             pst = (PreparedStatement) conn.prepareStatement(sql);
             pst.execute();
             //JOptionPane.showMessageDialog(null, "Update success");
@@ -277,7 +277,7 @@ public class BookReturn extends JInternalFrame implements KeyListener, ActionLis
     }
     private void returnMark() {
         try {
-            String sql = "UPDATE addBook SET mark = '1' WHERE bid = '"+bookId.getText()+"'";
+            String sql = "UPDATE booklend SET mark = '1' WHERE bid = '"+bookId.getText()+"'";
             pst = (PreparedStatement) conn.prepareStatement(sql);
             pst.execute();
             //JOptionPane.showMessageDialog(null, "Update success");

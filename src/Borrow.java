@@ -1,5 +1,4 @@
 
-import static com.sun.glass.ui.Cursor.setVisible;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
@@ -229,13 +228,14 @@ public class Borrow extends JInternalFrame implements KeyListener, ActionListene
       
     public void keyReleased(KeyEvent e) {
         if(e.getSource() == memberId){
+            System.out.println("memberid");
         try {
-            String sql = "SELECT name, type FROM addmember WHERE mid = '"+memberId.getText()+"'";            
+            String sql = "SELECT name, membertype FROM addmember WHERE mid = '"+memberId.getText()+"'";            
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if(rs.next()) {
             memberName.setText(rs.getString("name"));
-            memberType.setText(rs.getString("type"));
+            memberType.setText(rs.getString("membertype"));
             }else {
                 memberName.setText("");
                 memberType.setText("");
@@ -267,14 +267,16 @@ public class Borrow extends JInternalFrame implements KeyListener, ActionListene
 
     @Override
     public void keyTyped(KeyEvent e) {
-   if(e.getSource() == memberId){
+        
+    if(e.getSource() == memberId){
+        System.out.println("memberid2");
         try {
-            String sql = "SELECT name, type FROM addmember WHERE mid = '"+memberId.getText()+"'";            
+            String sql = "SELECT name, membertype FROM addmember WHERE mid = '"+memberId.getText()+"'";            
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if(rs.next()) {
             memberName.setText(rs.getString("name"));
-            memberType.setText(rs.getString("type"));
+            memberType.setText(rs.getString("membertype"));
             }else {
                 memberName.setText("");
                 memberType.setText("");
@@ -306,12 +308,12 @@ public class Borrow extends JInternalFrame implements KeyListener, ActionListene
     public void keyPressed(KeyEvent e) {
           if(e.getSource() == memberId){
         try {
-            String sql = "SELECT name, type FROM addmember WHERE mid = '"+memberId.getText()+"'";            
+            String sql = "SELECT name, memberType FROM addmember WHERE mid = '"+memberId.getText()+"'";            
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             if(rs.next()) {
             memberName.setText(rs.getString("name"));
-            memberType.setText(rs.getString("type"));
+            memberType.setText(rs.getString("memberType"));
             }else {
                 memberName.setText("");
                 memberType.setText("");
@@ -390,7 +392,7 @@ public class Borrow extends JInternalFrame implements KeyListener, ActionListene
     
     private void update() {
         try {
-            String sql = "UPDATE addBook SET mark = '1' WHERE bid = '"+bookId.getText()+"'";
+            String sql = "UPDATE booklend SET mark = '1' WHERE bid = '"+bookId.getText()+"'";
             pst = (PreparedStatement) conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Update success");

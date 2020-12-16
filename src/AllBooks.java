@@ -1,5 +1,4 @@
 
-import static com.sun.glass.ui.Cursor.setVisible;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -102,7 +101,6 @@ public class AllBooks extends JInternalFrame implements KeyListener, ActionListe
     panel.add(bookNameLbl);
     panel.add(bookName);
     panel.add(p);
-    panel.add(print);
     panel.add(clear);
     panel.add(exit);
     

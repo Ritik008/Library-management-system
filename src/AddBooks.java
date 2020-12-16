@@ -1,5 +1,3 @@
-
-import static com.sun.glass.ui.Cursor.setVisible;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
@@ -25,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class AddBooks extends JInternalFrame implements ActionListener {
-   
+  
     private Connection conn = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
@@ -241,6 +239,7 @@ public class AddBooks extends JInternalFrame implements ActionListener {
             autoId();
         }else 
             if(event.getSource() == update) {
+                System.out.println("hello world");
             try {
             String bid = this.bookId.getText();
             String name = this.name.getText();
@@ -250,8 +249,7 @@ public class AddBooks extends JInternalFrame implements ActionListener {
             String bookType = this.bookType.getSelectedItem().toString();
             String  publisher = this.publisher.getText();
             String price = this.price.getText();
-            
-            String sql = "UPDATE addbook SET name='"+name+"', b_code = '"+bcode+"', date='"+date+"', category = '"+category+"', book_type='"+bookType+"', publisher='"+publisher+"', price='"+price+"'";
+            String sql = "UPDATE addbook SET name='"+name+"', b_code = '"+bcode+"', date='"+date+"', category = '"+category+"', book_type='"+bookType+"', publisher='"+publisher+"', price='"+price+"' where bid= '"+bid+"'";
             pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Update success");

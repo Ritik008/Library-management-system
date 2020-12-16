@@ -1,5 +1,4 @@
 
-import static com.sun.glass.ui.Cursor.setVisible;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
@@ -135,7 +134,6 @@ public class LendHistory extends JInternalFrame implements KeyListener, ActionLi
     panel.add(toLbl);
     panel.add(memberName);
     panel.add(pane);
-    panel.add(print);
     panel.add(clear);
     panel.add(exit);
     panel.add(filter);
@@ -161,13 +159,14 @@ public class LendHistory extends JInternalFrame implements KeyListener, ActionLi
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    
     private void lendFilter() {
         String FDate = ((JTextField)from.getDateEditor().getUiComponent()).getText().toString();
         String TDate = ((JTextField)to.getDateEditor().getUiComponent()).getText().toString();
         
         if(FDate.length() > 0 && TDate.isEmpty()) {
             try {
-                String reportSql = "SELECT 'record_no', 'mid', 'bid', 'i_date', 'r_date' FROM  booklend WHERE i_date= '"+FDate+"' AND  mid LIKE '%"+memberName.getText()+"%'";
+                String reportSql = "SELECT 'record_no', 'memberid', 'bid', 'issuedate', 'r_date' FROM  booklend WHERE issueDate= '"+FDate+"' AND  memberid LIKE '%"+memberName.getText()+"%'";
                 pst = (PreparedStatement) conn.prepareStatement(reportSql);
                 rs = pst.executeQuery();
                 tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
@@ -177,7 +176,7 @@ public class LendHistory extends JInternalFrame implements KeyListener, ActionLi
             }
         }else if(FDate.length() > 0 && TDate.length() > 0) {
             try {
-                String reportSql = "SELECT record_no, mid, bid, i_date, r_date FROM booklend WHERE  mid LIKE '%"+memberName.getText()+"%' AND i_date between '"+FDate+"' and '"+TDate+"'";
+                String reportSql = "SELECT record_no, memberid, bid, issueDate, r_date FROM booklend WHERE  memberid LIKE '%"+memberName.getText()+"%' AND issuedate between '"+FDate+"' and '"+TDate+"'";
                 pst = (PreparedStatement) conn.prepareStatement(reportSql);
                 rs = pst.executeQuery();
                 tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
@@ -190,7 +189,7 @@ public class LendHistory extends JInternalFrame implements KeyListener, ActionLi
     }
  public void keyReleased(KeyEvent e) {
         try {
-            String sql = "SELECT *  FROM  booklend where mid LIKE '%"+memberName.getText()+"%'";
+            String sql = "SELECT *  FROM  booklend where memberid LIKE '%"+memberName.getText()+"%'";
             pst = (PreparedStatement)conn.prepareStatement(sql);
             rs = pst.executeQuery();
             tb.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));

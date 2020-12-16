@@ -1,5 +1,4 @@
 
-import static com.sun.glass.ui.Cursor.setVisible;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -104,7 +103,6 @@ public class AllMembers extends JInternalFrame implements KeyListener, ActionLis
     panel.add(memberNameLbl);
     panel.add(memberName);
     panel.add(pane);
-    panel.add(print);
     panel.add(clear);
     panel.add(exit);
     
