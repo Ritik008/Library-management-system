@@ -1,0 +1,4 @@
+create table addbook(bid varchar(40), name varchar(50), b_code varchar(50), date varchar(50), category varchar(40), book_type varchar(50), publisher varchar(30), price varchar(50), count int(11));
+create table addmember(mid varchar(30), name varchar(40), nic varchar(30), birthday varchar(30), gender varchar(10), address varchar(50), email varchar(50), contact varchar(60), memberType varchar(50));
+create table booklend(record_no varchar(50), memberid varchar(50), bid varchar(50), issueDate varchar(50), r_date varchar(50), mark int(11));
+create table bookreturn(bid varchar(50), mid varchar(40), late_days varchar(40), fine varchar(50));
